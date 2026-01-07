@@ -80,5 +80,5 @@ jobs:
       
       - name: Build Process
         run: |
-          make CC=“ccache clang” NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip vendor/lmi_defconfig
+          make CC="ccache clang" NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip vendor/lmi_defconfig
           make -j$(nproc --all) CC=“ccache clang” NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip
