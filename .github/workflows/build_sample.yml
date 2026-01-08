@@ -67,8 +67,8 @@ jobs:
           git clone --recursive https://github.com/HenryLogic/kernel_xiaomi_sm8250.git -b aosp-16 Kernel/android_kernel
           wget https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/LLVM-19.1.0-Linux-X64.tar.xz
           tar -C Clang/ -xvf LLVM-19.1.0-Linux-X64.tar.xz
-          git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b aarch64 Gcc/gcc-64
-          git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b arm32 Gcc/gcc-32
+          git clone --recursive https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9.git -b android12L-release Gcc/gcc-64
+          git clone --recursive https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9.git -b android12L-release Gcc/gcc-32
           
       - name: Build Process
         run: |
