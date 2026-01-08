@@ -79,8 +79,6 @@ jobs:
           export CROSS_COMPILE=~/Gcc/gcc-64/bin/aarch64-linux-android-
           export CROSS_COMPILE_ARM32=~/Gcc/gcc-32/bin/arm-linux-androideabi-
           export CLANG_TRIPLE=aarch64-linux-gnu-
-          ln -s ~/Gcc/gcc-64/bin/aarch64-linux-android-ld.bfd ~/Gcc/gcc-64/bin/aarch64-linux-android-ld
-          ln -s ~/Gcc/gcc-32/bin/arm-linux-androideabi-ld.bfd ~/Gcc/gcc-32/bin/arm-linux-androideabi-ld
           cd Kernel/android_kernel
           make CC="ccache clang" NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip lmi_defconfig
           make -j$(nproc --all) CC="ccache clang" NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip
