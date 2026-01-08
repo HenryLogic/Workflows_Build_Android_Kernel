@@ -1,0 +1,37 @@
+name: Build Redmi K30 Pro (lmi) (AOSP A16)
+
+on:
+  workflow_call:
+  workflow_dispatch: # It means your workflow can be triggerd mannually.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # eg. ubuntu-latest, windows-latest, macos-latest
+    steps:
+      - name: Checkout repository # Some neccesary steps (like clone your repository to the virtue machine) before the build process.
+        uses: actions/checkout@v3
+        
+      - name: Compilation environment preparation
+        run: |
+          sudo apt update
+          sudo apt upgrade
+          sudo apt install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python3 zstd libc6 binutils libc6-dev-i386 gcc g++ p7zip p7zip-full -y
+          
+          mkdir -p Kernel && mkdir -p Gcc && mkdir -p Clang
+          git clone --recursive https://github.com/HenryLogic/kernel_xiaomi_sm8250.git -b aosp-16 Kernel/android_kernel
+          wget https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.7/LLVM-21.1.7-Linux-X64.tar.xz
+          mkdir Clang/clang-llvm && tar -C Clang/clang-llvm/ -xvf LLVM-19.1.0-Linux-X64.tar.xz
+          git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b aarch64 Gcc/gcc-64
+          git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b arm32 Gcc/gcc-32
+          
+          export PATH=~/Clang/clang-llvm/bin:$PATH
+          export O=out
+          export ARCH=arm64
+          export SUBARCH=arm64
+          export CROSS_COMPILE=~/Gcc/gcc-64/bin/aarch64-linux-android-
+          export CROSS_COMPILE_ARM32=~/Gcc/gcc-32/bin/arm-linux-androideabi-
+          export CLANG_TRIPLE=aarch64-linux-gnu-
+      - name: Build Process
+        run: |
+          make CC=“ccache clang” NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip vendor/lmi_defconfig
+          make -j$(nproc --all) CC=“ccache clang” NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip
