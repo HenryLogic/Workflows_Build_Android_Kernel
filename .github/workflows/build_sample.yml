@@ -20,7 +20,7 @@ jobs:
           mkdir -p Kernel && mkdir -p Gcc && mkdir -p Clang
           git clone --recursive https://github.com/HenryLogic/kernel_xiaomi_sm8250.git -b aosp-16 Kernel/android_kernel
           wget https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.7/LLVM-21.1.7-Linux-X64.tar.xz
-          mkdir Clang/clang-llvm && tar -C Clang/clang-llvm/ -xvf LLVM-19.1.0-Linux-X64.tar.xz
+          mkdir Clang/clang-llvm && tar -C Clang/clang-llvm/ -xvf LLVM-21.1.7-Linux-X64.tar.xz
           git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b aarch64 Gcc/gcc-64
           git clone --recursive https://github.com/JackA1ltman/Google-GCC-Android-4.9.git -b arm32 Gcc/gcc-32
           
